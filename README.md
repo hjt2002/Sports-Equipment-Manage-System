@@ -1,9 +1,19 @@
-# Sports-Equipment-Manage-System
-基于关系数据库系统、采用BS结构实现的体育器材管理系统
-项目背景：北京交通大学2020级大二学年度专业课程综合实训课程设计第二次项目
-项目概述：基于ORACLE数据库、javaweb相关开发技术、北京交通大学软件学院数据库系统课程等理论基础和技术实现BS结构的体育器材管理系统，包含器材入库、器材借阅、器材归还三种业务流程。
-开发人员：何军庭 杜剑宇 方博 刘毅豪
+# web_project
 
-软件名称：Sports Equipment Manage System
-软件功能：
+## Project setup
+```
+npm install
+```
 
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

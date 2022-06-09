@@ -1,0 +1,220 @@
+<template>
+  <div id="app">
+    <el-container class="my_container">
+      <el-header class="my_header">
+        <div class="my_sysName">
+          体育器材系统 （管理员界面）
+          <i :class="isopen" @click="isOpen"></i>
+        </div>
+        <div class="my_header_right">
+          <span>当前管理员：</span>
+          <span >退出登录</span>
+        </div>
+      </el-header>
+      <el-container>
+        <el-aside class="my_aside" :width="`${asideWidth}px`">
+          <el-menu
+
+              :collapse-transition='false'
+              :collapse="iscollapse"
+              :default-active="defaultActive"
+              class="el-menu-vertical-demo"
+              @open="handleOpen"
+              @close="handleClose"
+              background-color="#545c64"
+              text-color="#fff"
+              active-text-color="#ffd04b"
+              router
+              style="border :0">
+            <el-menu-item index="/look_All_admin">
+              <i class="el-icon-setting"></i>
+              <span slot="title">浏览器材</span>
+            </el-menu-item>
+            <el-menu-item index="/search_admin">
+              <i class="el-icon-menu"></i>
+              <span slot="title">器材状态</span>
+            </el-menu-item>
+            <el-menu-item index="/user_look">
+              <i class="el-icon-menu"></i>
+              <span slot="title">用户管理</span>
+            </el-menu-item>
+            <el-menu-item index="/in_equip">
+              <i class="el-icon-menu"></i>
+              <span slot="title">器材入库</span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+          </el-menu>
+        </el-aside>
+        <el-main class="my_main">
+
+
+
+
+          <div class="common-layout">
+            <el-container>
+              <el-header>{{msg}}</el-header>
+              <el-main>
+                <div style="margin: 20px" />
+                <el-form
+                    :label-position="labelPosition"
+                    label-width="200px"
+                    :model="formLabelAlign"
+                    style="max-width: 500px"
+                >
+                  <el-form-item label="EID">
+                    <el-input v-model="formLabelAlign.EID" />
+                  </el-form-item>
+                  <el-form-item label="EQUIPMENTNAME">
+                    <el-input v-model="formLabelAlign.EQUIPMENTNAME" />
+                  </el-form-item>
+                  <el-form-item label="ESTATE"  >
+                    <label>  IN </label>
+                  </el-form-item>
+                </el-form>
+              </el-main>
+              <el-footer><div  >
+
+                <el-button type="primary"   class="my_button" @click="onSubmit">确定</el-button>
+
+              </div></el-footer>
+            </el-container>
+          </div>
+
+        </el-main>
+
+
+      </el-container>
+    </el-container>
+  </div>
+</template>
+
+<script>
+import { reactive, ref } from 'vue'
+import axios from "axios";
+import error from "mockjs";
+
+const labelPosition = ref('right')
+
+const formLabelAlign = reactive({
+  EID: '',
+  EQUIPMENTNAME: '',
+  ESTATE: 'YES',
+})
+
+export default {
+  data(){
+    return{
+
+      msg:'                          器材入库',
+      formLabelAlign
+
+    }
+  },
+
+  methods: {
+
+    async onSubmit()
+    {
+      let flag = ""
+      await
+      axios({
+        method: "post",
+        url: 'http://localhost:8181/equipment/addEquipment',
+        data: {
+          eid: formLabelAlign.EID,
+          equipmentname: formLabelAlign.EQUIPMENTNAME
+        }
+      }).then(function (resp){
+        console.log(resp)
+        flag = resp.data
+        console.log(error.response)
+      })
+
+      if(flag === "success"){
+        this.$message({
+          showClose: true,
+          message: "操作成功！",
+          type: 'success'
+        });
+      }else {
+        this.$message({
+          showClose: false,
+          message: "操作失败！",
+          type: 'fail'
+        });
+      }
+    }
+  }
+}
+
+
+
+
+</script>
+
+<style scoped>
+#app{
+  height: 100%;
+}
+.my_container{
+  height: 100%;
+}
+.my_header{
+  background:#303133;
+  color:#fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.my_sysName{
+  font-size: 20px;
+  font-weight: 500;
+}
+.my_header_right{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 200px;
+}
+.my_aside{
+  background: #545c64;
+  transition: width .3s;
+}
+.my_main{
+  background: #E4E7ED;
+}
+
+.my_button{
+
+  color: #fff;
+  width: 100px;
+  background-color: #97c491;
+  justify-content: center;
+  margin-left: 300px;
+
+}
+
+</style>

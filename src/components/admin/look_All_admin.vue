@@ -1,0 +1,123 @@
+<template>
+  <div id="app">
+    <el-container class="my_container">
+      <el-header class="my_header">
+        <div class="my_sysName">
+          体育器材系统     浏览器材
+          <i :class="isopen" @click="isOpen"></i>
+        </div>
+        <div class="my_header_right">
+          <span>当前用户：</span>
+          <span >退出登录</span>
+        </div>
+      </el-header>
+      <el-container>
+        <el-aside class="my_aside" :width="`${asideWidth}px`">
+          <el-menu
+
+              :collapse-transition='false'
+              :collapse="iscollapse"
+              :default-active="defaultActive"
+              class="el-menu-vertical-demo"
+              @open="handleOpen"
+              @close="handleClose"
+              background-color="#545c64"
+              text-color="#fff"
+              active-text-color="#ffd04b"
+              router
+              style="border :0">
+            <el-menu-item index="/look_All_admin">
+              <i class="el-icon-setting"></i>
+              <span slot="title">浏览器材</span>
+            </el-menu-item>
+            <el-menu-item index="/search_admin">
+              <i class="el-icon-menu"></i>
+              <span slot="title">器材状态</span>
+            </el-menu-item>
+            <el-menu-item index="/user_look">
+              <i class="el-icon-menu"></i>
+              <span slot="title">用户管理</span>
+            </el-menu-item>
+            <el-menu-item index="/in_equip">
+              <i class="el-icon-menu"></i>
+              <span slot="title">器材入库</span>
+            </el-menu-item>
+          </el-menu>
+        </el-aside>
+        <!--        中间那块东西-->
+        <!--        <el-main class="my_main">-->
+        <!--&lt;!&ndash;         // <router-view></router-view>&ndash;&gt;-->
+        <!--        </el-main>-->
+
+        <el-table :data="tableData" style="width: 100%">
+          <el-table-column prop = eid label="器材ID" width="200" />
+          <el-table-column prop = equipmentname  label= "器材名称" width="200" />
+<!--          <el-table-column prop="estate" label="器材状态" width="200" />-->
+        </el-table>
+
+      </el-container>
+    </el-container>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  data(){
+    return{
+      tableData: [{
+        eid: "",
+        equipmentname: "",
+        // estate: ""
+      }]
+    }
+  },
+
+  created(){
+    const _this = this
+    axios({
+      method: "get",
+      url: 'http://localhost:8181/equipment/findAll',
+    }).then(function (resp){
+      _this.tableData = resp.data
+      console.log(resp)
+    })
+  }
+}
+
+</script>
+
+<style scoped>
+#app{
+  height: 100%;
+}
+.my_container{
+  height: 100%;
+}
+.my_header{
+  background:#303133;
+  color:#fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.my_sysName{
+  font-size: 20px;
+  font-weight: 500;
+}
+.my_header_right{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 200px;
+}
+.my_aside{
+  background: #545c64;
+  transition: width .3s;
+}
+.my_main{
+  background: #E4E7ED;
+}
+
+</style>
