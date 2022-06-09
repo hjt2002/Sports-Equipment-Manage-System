@@ -1,19 +1,13 @@
-# web_project
+前端页面设计
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+使用VUE3框架
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+包括
+登录页面
+注册页面
+浏览器材页面
+查询器材页面
+器材入库页面
+借用器材页面
+归还器材页面
