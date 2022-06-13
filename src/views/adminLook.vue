@@ -8,7 +8,11 @@
         </div>
         <div class="my_header_right">
           <span>当前管理员：</span>
-          <span >退出登录</span>
+<!--          <span>{{App.globalProperties.$account}}</span>-->
+          <span>{{accountMessage}}</span>
+          <span >
+            <el-button class="e_button" @click="exit">退出登录</el-button>
+          </span>
         </div>
       </el-header>
       <el-container>
@@ -29,6 +33,10 @@
             <el-menu-item index="/look_All_admin">
               <i class="el-icon-setting"></i>
               <span slot="title">浏览器材</span>
+            </el-menu-item>
+            <el-menu-item index="/search_admin">
+              <i class="el-icon-menu"></i>
+              <span slot="title">器材状态</span>
             </el-menu-item>
             <el-menu-item index="/user_look">
               <i class="el-icon-menu"></i>
@@ -62,10 +70,18 @@
               <i class="el-icon-menu"></i>
               <span slot="title">  </span>
             </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
           </el-menu>
         </el-aside>
         <el-main class="my_main">
-          {{msg}}
+          Welcome....
         </el-main>
 
 
@@ -74,17 +90,31 @@
   </div>
 </template>
 
-<script>
+<script >
+import { getCurrentInstance } from "vue";
+
+
 export default {
-  data(){
-    return{
 
-      msg:'Welcome.............'
 
+  methods: {
+
+    accountMessage: function () {
+      return ref(getCurrentInstance()?.appContext.config.globalProperties.$account)
+    },
+
+
+    exit(){
+      this.$router.push({ path:'/'  })
     }
-  }
-}
+  },
+   data() {
+    return{
+      account_:"ww"
+    }
 
+   }
+  }
 
 
 
@@ -112,7 +142,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 200px;
+  width: 300px;
 }
 .my_aside{
   background: #545c64;
@@ -120,6 +150,14 @@ export default {
 }
 .my_main{
   background: #E4E7ED;
+}
+
+.e_button{
+
+  color: #0a0a0a;
+  width: 100px;
+  background-color: #b6506e;
+
 }
 
 </style>

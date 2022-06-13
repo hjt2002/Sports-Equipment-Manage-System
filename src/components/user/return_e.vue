@@ -8,7 +8,11 @@
         </div>
         <div class="my_header_right">
           <span>当前用户：</span>
-          <span >退出登录</span>
+          <span>{{accountMessage}}</span>
+
+          <span >
+            <el-button class="e_button" @click="exit">退出登录</el-button>
+          </span>
         </div>
       </el-header>
       <el-container>
@@ -41,6 +45,14 @@
             <el-menu-item index="/return_e">
               <i class="el-icon-menu"></i>
               <span slot="title">归还器材</span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
             </el-menu-item>
             <el-menu-item >
               <i class="el-icon-menu"></i>
@@ -120,6 +132,8 @@
 <script>
 
 import { reactive, ref } from 'vue'
+import { getCurrentInstance } from "vue";
+import axios from "axios";
 
 const size = ref('default')
 const labelPosition = ref('right')
@@ -131,19 +145,38 @@ const return_data = reactive({
 })
 
 export default {
-  data(){
-    return{
-
-      msg:'归还器材',
+  data() {
+    return {
+      msg: '归还器材',
       return_data
-
     }
-  }
-  ,
+  },
 
   methods: {
+
+    accountMessage: function () {
+      return ref(getCurrentInstance()?.appContext.config.globalProperties.$account)
+    },
+      exit(){
+        this.$router.push({ path:'/'  })
+      },
+
+
     onSubmit()
     {
+      axios({
+        method: "post",
+        url: 'http://localhost:8181/equipmentstate/return',
+        data:{
+          userid: return_data.UID,
+          eid: return_data.EID,
+          return_time: return_data.returnTime
+        }
+      }).then(function (resp){
+        // _this.tableData = [resp.data]
+        console.log(resp)
+      })
+
       this.$message({
         showClose: true,
         message: "操作成功！",
@@ -180,7 +213,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 200px;
+  width: 300px;
 }
 .my_aside{
   background: #545c64;
@@ -195,6 +228,13 @@ export default {
   width: 100px;
   background-color: #97c491;
   margin-left: 400px;
+
+}
+.e_button{
+
+  color: #0a0a0a;
+  width: 100px;
+  background-color: #b6506e;
 
 }
 </style>

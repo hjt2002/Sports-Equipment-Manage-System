@@ -8,7 +8,11 @@
         </div>
         <div class="my_header_right">
           <span>当前用户：</span>
-          <span >退出登录</span>
+          <span>{{accountMessage}}</span>
+
+          <span >
+            <el-button class="e_button" @click="exit">退出登录</el-button>
+          </span>
         </div>
       </el-header>
       <el-container>
@@ -42,6 +46,38 @@
               <i class="el-icon-menu"></i>
               <span slot="title">归还器材</span>
             </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
 
 
 
@@ -51,6 +87,7 @@
 <!--                <el-main class="my_main">-->
 <!--        &lt;!&ndash;         // <router-view></router-view>&ndash;&gt;-->
 <!--                </el-main>-->
+        <el-main class="my_main">
 
         <div class="common-layout">
           <el-container>
@@ -76,15 +113,15 @@
             <el-main>
 
               <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="EID" label="EID" width="200" />
-                <el-table-column prop="ESTATE" label="ESTATE" width="200" />
+                <el-table-column prop= eid label="EID" width="200" />
+                <el-table-column prop= estate label="ESTATE" width="200" />
               </el-table>
 
             </el-main>
           </el-container>
         </div>
 
-
+        </el-main>
 
 
 
@@ -94,61 +131,61 @@
 </template>
 
 <script>
+import { getCurrentInstance } from "vue";
+import axios from "axios";
+
 export default {
   data(){
-    let search_data;
     return{
-      search_data,
+      search_data:  null,
       tableData: [
         {
-          EID: '1',
-
-          ESTATE: '1',
-        },
-        {
-          EID: '2',
-
-          ESTATE: '1',
-        },
-        {
-          EID: '3',
-
-          ESTATE: '1',
-        },
-        {
-          EID: '4',
-
-          ESTATE: '1',
-        },
-        {
-          EID: '5',
-
-          ESTATE: '1',
-        },
-        {
-          EID: '6',
-
-          ESTATE: '1',
-        },
-        {
-          EID: '7',
-
-          ESTATE: '1',
-        },
-
-      ]
+          EID: null,
+          ESTATE:null,
+        }]
     }
   },
   methods: {
+    accountMessage: function () {
+      return ref(getCurrentInstance()?.appContext.config.globalProperties.$account)
+    },
+      exit(){
+        this.$router.push({ path:'/'  })
+      },
+
     onSubmit()
     {
+      this.tableData = null
+      const _this = this
+
+      axios({
+        method: "post",
+        url: 'http://localhost:8181/equipmentstate/stateFind',
+        data:{
+          id: _this.search_data
+        }
+      }).then(function (resp){
+        _this.tableData = [resp.data]
+        console.log(resp)
+      })
+
       this.$message({
         showClose: true,
         message: "操作成功！",
         type: 'success'
       });
     }
-  }
+  },
+  created(){
+    const _this = this
+    axios({
+      method: "get",
+      url: 'http://localhost:8181/equipmentstate/findAll',
+    }).then(function (resp){
+      _this.tableData = resp.data
+      console.log(resp)
+    })
+  },
 }
 
 
@@ -178,7 +215,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 200px;
+  width: 300px;
 }
 .my_aside{
   background: #545c64;
@@ -196,5 +233,11 @@ export default {
   margin-left: 400px;
 
 }
+.e_button{
 
+  color: #0a0a0a;
+  width: 100px;
+  background-color: #b6506e;
+
+}
 </style>

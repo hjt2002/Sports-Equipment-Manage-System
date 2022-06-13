@@ -7,8 +7,12 @@
           <i :class="isopen" @click="isOpen"></i>
         </div>
         <div class="my_header_right">
-          <span>当前用户：</span>
-          <span >退出登录</span>
+          <span>当前管理员：</span>
+          <span>{{accountMessage}}</span>
+
+          <span >
+            <el-button class="e_button" @click="exit">退出登录</el-button>
+          </span>
         </div>
       </el-header>
       <el-container>
@@ -42,6 +46,38 @@
               <i class="el-icon-menu"></i>
               <span slot="title">器材入库</span>
             </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
 
 
 
@@ -51,6 +87,8 @@
         <!--                <el-main class="my_main">-->
         <!--        &lt;!&ndash;         // <router-view></router-view>&ndash;&gt;-->
         <!--                </el-main>-->
+
+        <el-main class="my_main">
 
         <div class="common-layout">
           <el-container>
@@ -81,11 +119,13 @@
               <el-table :data="tableData" style="width: 100%">
                 <el-table-column prop= eid label="EID" width="200" />
                 <el-table-column prop= estate label="ESTATE" width="200" />
+
               </el-table>
 
             </el-main>
           </el-container>
         </div>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -93,6 +133,7 @@
 
 <script>
 import axios from "axios";
+import { getCurrentInstance } from "vue";
 
 export default {
   data(){
@@ -107,6 +148,15 @@ export default {
   },
 
   methods: {
+
+    accountMessage: function () {
+      return ref(getCurrentInstance()?.appContext.config.globalProperties.$account)
+    },
+
+    exit(){
+        this.$router.push({ path:'/'  })
+      },
+
 
     onSubmit()
     {
@@ -161,7 +211,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 200px;
+  width: 300px;
 }
 .my_aside{
   background: #545c64;
@@ -177,6 +227,13 @@ export default {
   width: 100px;
   background-color: #97c491;
   margin-left: 400px;
+
+}
+.e_button{
+
+  color: #0a0a0a;
+  width: 100px;
+  background-color: #b6506e;
 
 }
 

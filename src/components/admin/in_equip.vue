@@ -8,7 +8,11 @@
         </div>
         <div class="my_header_right">
           <span>当前管理员：</span>
-          <span >退出登录</span>
+          <span>{{accountMessage}}</span>
+
+          <span >
+            <el-button class="e_button" @click="exit">退出登录</el-button>
+          </span>
         </div>
       </el-header>
       <el-container>
@@ -66,10 +70,17 @@
               <i class="el-icon-menu"></i>
               <span slot="title">  </span>
             </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
           </el-menu>
         </el-aside>
         <el-main class="my_main">
-
 
 
 
@@ -115,6 +126,7 @@
 import { reactive, ref } from 'vue'
 import axios from "axios";
 import error from "mockjs";
+import { getCurrentInstance } from "vue";
 
 const labelPosition = ref('right')
 
@@ -135,6 +147,14 @@ export default {
   },
 
   methods: {
+    accountMessage: function () {
+      return ref(getCurrentInstance()?.appContext.config.globalProperties.$account)
+    },
+
+    exit(){
+        this.$router.push({ path:'/'  })
+      },
+
 
     async onSubmit()
     {
@@ -197,7 +217,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 200px;
+  width: 300px;
 }
 .my_aside{
   background: #545c64;
@@ -214,6 +234,13 @@ export default {
   background-color: #97c491;
   justify-content: center;
   margin-left: 300px;
+
+}
+.e_button{
+
+  color: #0a0a0a;
+  width: 100px;
+  background-color: #b6506e;
 
 }
 

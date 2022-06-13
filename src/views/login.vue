@@ -71,11 +71,16 @@ export default {
         this.open()
       }else if(temp === 0){
         //登录错误
+
+
         this.msg = "账号或密码错误"
         this.open()
         //登录成功
       }else if (temp == 11){
         //admin
+        //  //登陆成功后赋值全局变量
+        // App.prototype.global.account=this.username;
+
         this.$router.push({ path:'/admin'  })
       }else if(temp == 10){
         //user

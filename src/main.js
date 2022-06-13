@@ -1,3 +1,5 @@
+
+
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -11,6 +13,11 @@ import axios from 'axios'
 
 
 
+
+
 createApp(App).use(store).use(router).use(ElementPlus).mount('#app')
 
-APP.prototype.$axios=axios//
+App.prototype.$axios=axios//
+
+
+App.config.globalProperties.$account = "xxx"

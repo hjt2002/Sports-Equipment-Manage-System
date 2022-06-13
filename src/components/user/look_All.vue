@@ -8,7 +8,12 @@
         </div>
         <div class="my_header_right">
           <span>当前用户：</span>
-          <span >退出登录</span>
+
+          <span>{{accountMessage}}</span>
+
+          <span >
+            <el-button class="e_button" @click="exit">退出登录</el-button>
+          </span>
         </div>
       </el-header>
       <el-container>
@@ -42,6 +47,38 @@
               <i class="el-icon-menu"></i>
               <span slot="title">归还器材</span>
             </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
+            <el-menu-item >
+              <i class="el-icon-menu"></i>
+              <span slot="title">  </span>
+            </el-menu-item>
 
 
 
@@ -51,60 +88,49 @@
         <!--        <el-main class="my_main">-->
         <!--&lt;!&ndash;         // <router-view></router-view>&ndash;&gt;-->
         <!--        </el-main>-->
-        <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="EID" label="EID" width="200" />
-          <el-table-column prop="EQUIPMENTNAME" label="EQUIPMENTNAME" width="200" />
-        </el-table>
+        <el-main class="my_main">
 
+        <el-table :data="tableData" style="width: 100%">
+          <el-table-column prop= eid label="EID" width="200" />
+          <el-table-column prop= equipmentname label="EQUIPMENTNAME" width="200" />
+        </el-table>
+        </el-main>
       </el-container>
     </el-container>
   </div>
 </template>
 
 <script>
+import { getCurrentInstance } from "vue";
+import axios from "axios";
+
 export default {
   data(){
     return{
-      tableData: [
-        {
-          EID: '1',
-          EQUIPMENTNAME: 'a',
-          ESTATE: '1',
-        },
-        {
-          EID: '2',
-          EQUIPMENTNAME: 'b',
-          ESTATE: '1',
-        },
-        {
-          EID: '3',
-          EQUIPMENTNAME: 'c',
-          ESTATE: '1',
-        },
-        {
-          EID: '4',
-          EQUIPMENTNAME: 'd',
-          ESTATE: '1',
-        },
-        {
-          EID: '5',
-          EQUIPMENTNAME: 'e',
-          ESTATE: '1',
-        },
-        {
-          EID: '6',
-          EQUIPMENTNAME: 'f',
-          ESTATE: '1',
-        },
-        {
-          EID: '7',
-          EQUIPMENTNAME: 'g',
-          ESTATE: '1',
-        },
-
-        ]
+      tableData: null
     }
+  },
+  methods: {
+
+    accountMessage: function () {
+      return ref(getCurrentInstance()?.appContext.config.globalProperties.$account)
+    },
+    exit(){
+      this.$router.push({ path:'/'  })
+    }
+  },
+
+  created(){
+    const _this = this
+    axios({
+      method: "get",
+      url: 'http://localhost:8181/equipment/findAll',
+    }).then(function (resp){
+      _this.tableData = resp.data
+      console.log(resp)
+    })
   }
+
 }
 
 
@@ -134,7 +160,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 200px;
+  width: 300px;
 }
 .my_aside{
   background: #545c64;
@@ -142,6 +168,13 @@ export default {
 }
 .my_main{
   background: #E4E7ED;
+}
+.e_button{
+
+  color: #0a0a0a;
+  width: 100px;
+  background-color: #b6506e;
+
 }
 
 </style>
