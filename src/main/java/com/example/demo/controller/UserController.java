@@ -67,4 +67,17 @@ public class UserController {
             }
         }
     }
+
+    @PostMapping("changeUser")
+    public void changeUser(@RequestBody Map map){
+        MYUSER myuser = ur.getReferenceById(map.get("id").toString());
+        myuser.setUSERPASSWORD(map.get("password").toString());
+        ur.save(myuser);
+    }
+    @PostMapping("deleteUser")
+    public void deleteUser(@RequestBody Map map){
+        ur.deleteById(map.get("id").toString());
+    }
+
+
 }

@@ -42,6 +42,9 @@ public class EquipmentController {
         }else {
             return "fail";
         }
-
+    }
+    @PostMapping("/deleteEquipment")
+    public void deleteEquipment(@RequestBody Map map){
+        equipmentRepository.deleteById(map.get("id").toString());
     }
 }
